@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Araish Ahmad — AI/ML Engineer & Developer</title>
+  <meta name="description" content="Portfolio of Araish Ahmad — Computer Science student at COMSATS University, specializing in AI/ML engineering, React development, and full-stack applications.">
+  <meta name="theme-color" content="#08090d">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Fonts: Outfit (display), DM Sans (body), JetBrains Mono (utility) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- ============ LOADER ============ -->
+  <div id="loader" aria-live="polite">
+    <div class="loader-content">
+      <div class="loader-name">ARAISH AHMAD</div>
+      <div class="loader-role">AI/ML Engineer</div>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loader-fill"></div>
+      </div>
+      <div class="loader-percent" id="loader-percent">0%</div>
+    </div>
+  </div>
+
+  <!-- ============ CANVAS BACKGROUND ============ -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div id="bg-overlay" aria-hidden="true"></div>
+
+  <!-- ============ CURSOR BUBBLE ============ -->
+  <div id="cursor-bubble" aria-hidden="true">
+    <span id="cursor-bubble-text"></span>
+  </div>
+
+  <!-- ============ NAV DOTS ============ -->
+  <nav id="nav-dots" class="nav-dots" aria-label="Section navigation">
+    <a href="#hero" class="nav-dot active" data-tooltip="Home" aria-label="Home"></a>
+    <a href="#education" class="nav-dot" data-tooltip="Education" aria-label="Education"></a>
+    <a href="#skills" class="nav-dot" data-tooltip="Skills" aria-label="Skills"></a>
+    <a href="#experience" class="nav-dot" data-tooltip="Experience" aria-label="Experience"></a>
+    <a href="#projects" class="nav-dot" data-tooltip="Projects" aria-label="Projects"></a>
+    <a href="#contact" class="nav-dot" data-tooltip="Contact" aria-label="Contact"></a>
+  </nav>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main>
+
+    <!-- ——— HERO ——— -->
+    <section id="hero" class="section section--hero">
+      <div class="hero-content">
+        <div class="hero-avatar-wrapper animate-in" data-tooltip="That's me!">
+          <div class="hero-avatar-glow"></div>
+          <img src="image.png" alt="Araish Ahmad" class="hero-avatar">
+        </div>
+        <p class="hero-greeting">Hello, I'm</p>
+        <h1 class="hero-name" data-tooltip="Araish Ahmad">Araish Ahmad</h1>
+        <p class="hero-role">
+          Computer Science Student
+          <span class="hero-dot">·</span>
+          AI/ML Enthusiast
+        </p>
+        <p class="hero-tagline">Building intelligent systems, one algorithm at a time.</p>
+        <div class="scroll-cue" data-tooltip="Scroll Down">
+          <span class="scroll-cue-text">Scroll to explore</span>
+          <div class="scroll-cue-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— EDUCATION ——— -->
+    <section id="education" class="section">
+      <div class="section-inner">
+        <div class="section-label">
+          <span class="section-number">01</span>
+          <span class="section-line"></span>
+          <span class="section-title">EDUCATION</span>
+        </div>
+
+        <div class="section-content">
+          <div class="edu-card animate-in" data-tooltip="COMSATS University">
+            <div class="edu-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/>
+              </svg>
+            </div>
+            <h3 class="edu-institution">COMSATS University Islamabad</h3>
+            <p class="edu-campus">Lahore Campus</p>
+            <div class="edu-details">
+              <span class="edu-degree">BS Computer Science</span>
+              <span class="edu-date">Fall 2023 – Spring 2027 (Expected)</span>
+            </div>
+          </div>
+
+          <div class="cert-block animate-in">
+            <h3 class="cert-heading" data-tooltip="Certifications">Certifications</h3>
+            <div class="cert-list">
+              <div class="cert-item" data-tooltip="HackerRank">
+                <span class="cert-name">Problem Solving (Basic)</span>
+                <span class="cert-meta">
+                  <span class="cert-issuer">HackerRank</span>
+                  <span class="cert-date">Jul 2025</span>
+                </span>
+              </div>
+              <div class="cert-item" data-tooltip="Great Learning">
+                <span class="cert-name">SQL for Data Science</span>
+                <span class="cert-meta">
+                  <span class="cert-issuer">Great Learning Academy</span>
+                  <span class="cert-date">Jul 2024</span>
+                </span>
+              </div>
+              <div class="cert-item" data-tooltip="University of Michigan">
+                <a href="https://www.coursera.org/account/accomplishments/verify/F28FB1Q9SB7B" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                  <span class="cert-name" style="cursor: pointer;">Getting started with Python ↗</span>
+                </a>
+                <span class="cert-meta">
+                  <span class="cert-issuer">University of Michigan</span>
+                  <span class="cert-date">Aug 2026</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— SKILLS ——— -->
+    <section id="skills" class="section">
+      <div class="section-inner">
+        <div class="section-label">
+          <span class="section-number">02</span>
+          <span class="section-line"></span>
+          <span class="section-title">SKILLS</span>
+        </div>
+
+        <div class="section-content skills-grid">
+          <div class="skill-group animate-in">
+            <h3 class="skill-group-title">Languages</h3>
+            <div class="skill-tags">
+              <span class="skill-tag" data-tooltip="Python">Python</span>
+              <span class="skill-tag" data-tooltip="SQL">SQL</span>
+              <span class="skill-tag" data-tooltip="Java">Java</span>
+              <span class="skill-tag" data-tooltip="HTML & CSS">HTML &amp; CSS</span>
+              <span class="skill-tag" data-tooltip="JavaScript">JavaScript</span>
+            </div>
+          </div>
+
+          <div class="skill-group animate-in">
+            <h3 class="skill-group-title">AI / Machine Learning</h3>
+            <div class="skill-tags">
+              <span class="skill-tag" data-tooltip="Machine Learning">Machine Learning</span>
+              <span class="skill-tag" data-tooltip="Random Forest">Random Forest</span>
+              <span class="skill-tag" data-tooltip="NLP">NLP</span>
+              <span class="skill-tag" data-tooltip="FastAPI">FastAPI</span>
+            </div>
+          </div>
+
+          <div class="skill-group animate-in">
+            <h3 class="skill-group-title">Frameworks &amp; Libraries</h3>
+            <div class="skill-tags">
+              <span class="skill-tag" data-tooltip="React">React</span>
+              <span class="skill-tag" data-tooltip="Node.js">Node.js</span>
+            </div>
+          </div>
+
+          <div class="skill-group animate-in">
+            <h3 class="skill-group-title">Tools &amp; Platforms</h3>
+            <div class="skill-tags">
+              <span class="skill-tag" data-tooltip="Git">Git</span>
+              <span class="skill-tag" data-tooltip="GitHub">GitHub</span>
+              <span class="skill-tag" data-tooltip="Docker">Docker</span>
+              <span class="skill-tag" data-tooltip="Docker Hub">Docker Hub</span>
+              <span class="skill-tag" data-tooltip="Vercel">Vercel</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— EXPERIENCE ——— -->
+    <section id="experience" class="section">
+      <div class="section-inner">
+        <div class="section-label">
+          <span class="section-number">03</span>
+          <span class="section-line"></span>
+          <span class="section-title">EXPERIENCE</span>
+        </div>
+
+        <div class="section-content">
+          <!-- NETSOL — Featured / Highlighted -->
+          <div class="exp-card exp-card--featured" data-tooltip="Netsol Technologies">
+            <div class="exp-featured-badge">
+              <span class="badge-star">★</span> Pakistan's Leading Software House
+            </div>
+            <div class="exp-header">
+              <h3 class="exp-company">NETSOL Technologies</h3>
+              <span class="exp-role">AI/ML Intern</span>
+            </div>
+            <p class="exp-description">
+              Worked on cutting-edge AI/ML projects and backend development with FastAPI at Pakistan's
+              premier software company — gaining hands-on experience building production-grade
+              machine learning pipelines and intelligent systems.
+            </p>
+            <div class="exp-tech-tags">
+              <span class="exp-tech">AI/ML</span>
+              <span class="exp-tech">FastAPI</span>
+              <span class="exp-tech">Python</span>
+              <span class="exp-tech">Machine Learning</span>
+            </div>
+          </div>
+
+          <!-- Elytra Studios -->
+          <div class="exp-card animate-in" data-tooltip="Elytra Studios">
+            <div class="exp-header">
+              <h3 class="exp-company">Elytra Studios</h3>
+              <span class="exp-role">React Developer Intern</span>
+            </div>
+            <p class="exp-description">
+              Developed responsive and interactive user interfaces using React, collaborating
+              with the team to deliver modern frontend solutions for client projects.
+            </p>
+            <div class="exp-tech-tags">
+              <span class="exp-tech">React</span>
+              <span class="exp-tech">JavaScript</span>
+              <span class="exp-tech">Frontend</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— PROJECTS ——— -->
+    <section id="projects" class="section">
+      <div class="section-inner">
+        <div class="section-label">
+          <span class="section-number">04</span>
+          <span class="section-line"></span>
+          <span class="section-title">PROJECTS</span>
+        </div>
+
+        <div class="section-content projects-grid">
+          <div class="project-card" data-tooltip="Speech Emotion Recognition">
+            <div class="project-date">May 2025 – Jun 2025</div>
+            <h3 class="project-name">Speech Emotion Recognition</h3>
+            <p class="project-desc">
+              ML-powered desktop application that detects human emotions from speech patterns
+              using a Random Forest Classifier with an interactive Tkinter GUI for real-time
+              audio input and prediction.
+            </p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>ML</span>
+              <span>Random Forest</span>
+              <span>Tkinter</span>
+            </div>
+            <div class="project-links" style="margin-top: auto; text-align: center;">
+              <a href="https://github.com/araishahmad/Speech-Emotion-Recognition" target="_blank" rel="noopener noreferrer" class="explore-btn" data-tooltip="GitHub Repository">Explore Repo ↗</a>
+            </div>
+          </div>
+
+          <div class="project-card" data-tooltip="SplitWise">
+            <div class="project-date">Dec 2025</div>
+            <h3 class="project-name">SplitWise — Expense Tracker</h3>
+            <p class="project-desc">
+              Full-stack expense tracking web app for hostelites to manage and split group
+              expenses per member, with cost recording and balance calculation features.
+            </p>
+            <div class="project-tech">
+              <span>HTML/CSS/JS</span>
+              <span>Node.js</span>
+              <span>Vercel</span>
+            </div>
+            <div class="project-links" style="margin-top: auto; text-align: center;">
+              <a href="https://github.com/araishahmad/SplitWise-SharedExpenseTracker" target="_blank" rel="noopener noreferrer" class="explore-btn" data-tooltip="GitHub Repository">Explore Repo ↗</a>
+            </div>
+          </div>
+
+          <div class="project-card" data-tooltip="NYC Taxi Warehouse">
+            <div class="project-date">Aug 2026</div>
+            <h3 class="project-name">NYC Taxi Warehouse</h3>
+            <p class="project-desc">
+              A big data pipeline built with the Hadoop ecosystem that ingests, processes, and analyzes NYC TLC taxi trip records for fare prediction, hotspot mapping, and driver performance analytics.
+            </p>
+            <div class="project-tech">
+              <span>Hadoop</span>
+              <span>Big Data</span>
+              <span>Data Pipeline</span>
+            </div>
+            <div class="project-links" style="margin-top: auto; text-align: center;">
+              <a href="https://github.com/araishahmad/nyc-taxi-warehouse" target="_blank" rel="noopener noreferrer" class="explore-btn" data-tooltip="GitHub Repository">Explore Repo ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ——— CONTACT ——— -->
+    <section id="contact" class="section section--contact">
+      <div class="section-inner">
+        <div class="section-label">
+          <span class="section-number">05</span>
+          <span class="section-line"></span>
+          <span class="section-title">CONTACT</span>
+        </div>
+
+        <div class="section-content contact-content">
+          <h2 class="contact-heading">Let's Connect</h2>
+          <p class="contact-subtext">
+            Open to internship opportunities, collaborations, and tech conversations.
+          </p>
+
+          <div class="contact-links">
+            <a href="mailto:araish.ahmadd@gmail.com" class="contact-link" data-tooltip="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              <span>araish.ahmadd@gmail.com</span>
+            </a>
+            <a href="tel:+923337661444" class="contact-link" data-tooltip="Phone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span>+92-333-7661444</span>
+            </a>
+          </div>
+
+          <div class="contact-socials">
+            <a href="https://github.com/araishahmad" class="social-btn" data-tooltip="GitHub" target="_blank" rel="noopener noreferrer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/araish-ahmad/" class="social-btn" data-tooltip="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ SCRIPTS ============ -->
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <!-- Site logic -->
+  <script src="index.js"></script>
+
+</body>
+</html>
