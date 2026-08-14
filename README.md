@@ -17,47 +17,6 @@ A cinematic, scroll-driven personal portfolio website for **Araish Ahmad** — C
 
 ---
 
-## 🗂️ Project Structure
-
-```
-portfolio-araish/
-├── index.html              # Main HTML — all sections and markup
-├── index.css               # All styles (dark theme, animations, layout)
-├── index.js                # Site logic (loader, canvas, GSAP, Lenis, cursor)
-├── bg-frames/              # 300 JPEG frames for background scroll animation
-│   └── ezgif-frame-001.jpg … ezgif-frame-300.jpg
-├── image.png               # Profile photo (hero avatar)
-├── favicon.svg             # SVG favicon
-└── Araish_Ahmad_Resume.pdf # Downloadable resume
-```
-
----
-
-## 🚀 Running Locally
-
-Since this is a **static site**, you need a local HTTP server (not just opening `index.html` directly) because the background frames are loaded via `fetch()`, which is blocked by browsers over `file:///` due to CORS.
-
-### Option 1 — Using `npx serve` (recommended)
-
-```powershell
-npx -y serve . -p 3000
-```
-
-Then open your browser at: **http://localhost:3000**
-
-### Option 2 — Using VS Code Live Server
-
-Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension, right-click `index.html`, and select **"Open with Live Server"**.
-
-### Option 3 — Using Python
-
-```bash
-# Python 3
-python -m http.server 3000
-```
-
----
-
 ## 🛠️ Tech Stack
 
 | Layer         | Technology                                       |
@@ -97,6 +56,5 @@ The `bg-frames/` folder contains **300 JPEG frames** extracted from a video/GIF.
 ## 📬 Contact
 
 - **Email:** araish.ahmadd@gmail.com
-- **Phone:** +92-333-7661444
 - **GitHub:** [github.com/araishahmad](https://github.com/araishahmad)
 - **LinkedIn:** [linkedin.com/in/araish-ahmad](https://www.linkedin.com/in/araish-ahmad/)
