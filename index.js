@@ -14,9 +14,9 @@
 
   // ——— Config ———
   var TOTAL_FRAMES = 300
+  var CRITICAL_FRAMES = 30   // frames loaded before site is revealed (~1.1 MB)
   var FRAME_PATH = 'bg-frames/ezgif-frame-'
-  var MIN_LOADER_MS = 2500
-  var BATCH_SIZE = 12
+  var BATCH_SIZE = 30        // larger batches leverage HTTP/2 parallelism
 
   // ——— State ———
   var frames = new Array(TOTAL_FRAMES)
@@ -47,9 +47,19 @@
     ctx.imageSmoothingQuality = 'high'
   }
 
-  /** Draw a frame at the given index using "cover" logic. */
+  /**
+   * Draw a frame using "cover" logic.
+   * If the requested frame isn't loaded yet (background phase still running),
+   * walk backward to find the nearest available frame so canvas never goes blank.
+   */
   function drawFrame(idx) {
     var img = frames[idx]
+    // nearest-frame fallback — walk back up to 30 slots
+    if (!img) {
+      for (var f = idx - 1; f >= Math.max(0, idx - 30); f--) {
+        if (frames[f]) { img = frames[f]; break }
+      }
+    }
     if (!img) return
 
     var cw = canvas.width
@@ -81,69 +91,86 @@
   //  FRAME PRELOADER
   // =============================================
 
+  // =============================================
+  //  FRAME PRELOADER — Two-phase progressive strategy
+  //
+  //  Phase 1 (Critical): Load first CRITICAL_FRAMES frames (~1.1 MB).
+  //                      Site is revealed immediately after these are ready.
+  //  Phase 2 (Background): Remaining frames load silently while user browses.
+  //                      drawFrame() uses a nearest-frame fallback so the
+  //                      canvas never goes blank during background loading.
+  // =============================================
+
   function preloadFrames() {
-    var t0 = Date.now()
-    var loaded = 0
+    var loaded = 0          // tracks phase-1 progress for the loader UI
     var targetPercent = 0
     var currentPercent = 0
-    var loaderRaf
 
+    // Animated loader bar (eases toward targetPercent each rAF tick)
     function updateLoader() {
-      // Eases out: fast at start, slows down as it approaches target
-      currentPercent += (targetPercent - currentPercent) * 0.08
+      currentPercent += (targetPercent - currentPercent) * 0.1
       if (currentPercent > 99.9) currentPercent = 100
-      
       var displayPct = Math.round(currentPercent)
       loaderFill.style.width = currentPercent + '%'
       loaderPercent.textContent = displayPct + '%'
-
-      if (currentPercent < 100) {
-        loaderRaf = requestAnimationFrame(updateLoader)
-      }
+      if (currentPercent < 100) requestAnimationFrame(updateLoader)
     }
-    loaderRaf = requestAnimationFrame(updateLoader)
+    requestAnimationFrame(updateLoader)
 
+    // Load a single frame by index, returns a Promise
     function loadOne(i) {
       var pad = String(i + 1).padStart(3, '0')
       return fetch(FRAME_PATH + pad + '.jpg')
         .then(function (resp) { return resp.blob() })
         .then(function (blob) { return createImageBitmap(blob) })
-        .then(function (bmp) {
-          frames[i] = bmp
-          loaded++
-          targetPercent = (loaded / TOTAL_FRAMES) * 100
-        })
+        .then(function (bmp) { frames[i] = bmp })
+        .catch(function () { /* silently skip any failed frame */ })
     }
 
-    function loadBatch(startIdx) {
-      if (startIdx >= TOTAL_FRAMES) {
-        // All loaded — enforce minimum display time
-        var elapsed = Date.now() - t0
-        var remaining = Math.max(0, MIN_LOADER_MS - elapsed)
-        return new Promise(function (resolve) {
-          setTimeout(resolve, remaining)
-        }).then(onAllLoaded)
-      }
-
+    // Load a batch of frames in parallel, returns a Promise
+    function loadBatch(startIdx, count) {
       var batch = []
-      var end = Math.min(startIdx + BATCH_SIZE, TOTAL_FRAMES)
-      for (var j = startIdx; j < end; j++) {
-        batch.push(loadOne(j))
-      }
-      return Promise.all(batch).then(function () {
-        return loadBatch(startIdx + BATCH_SIZE)
-      })
+      var end = Math.min(startIdx + count, TOTAL_FRAMES)
+      for (var j = startIdx; j < end; j++) batch.push(loadOne(j))
+      return Promise.all(batch)
     }
 
-    loadBatch(0)
+    // ——— PHASE 1: Load critical frames, update loader bar ———
+    // We load CRITICAL_FRAMES one-by-one so the bar increments smoothly.
+    var phase1Promises = []
+    for (var i = 0; i < CRITICAL_FRAMES; i++) {
+      ;(function (idx) {
+        var p = loadOne(idx).then(function () {
+          loaded++
+          // Scale phase-1 progress to fill 0–100% of the loader bar
+          targetPercent = (loaded / CRITICAL_FRAMES) * 100
+        })
+        phase1Promises.push(p)
+      })(i)
+    }
+
+    Promise.all(phase1Promises).then(function () {
+      // Phase 1 complete — reveal the site immediately
+      onCriticalLoaded()
+
+      // ——— PHASE 2: Background load remaining frames in large batches ———
+      function loadNextBatch(startIdx) {
+        if (startIdx >= TOTAL_FRAMES) return   // all done
+        loadBatch(startIdx, BATCH_SIZE).then(function () {
+          loadNextBatch(startIdx + BATCH_SIZE)
+        })
+      }
+      loadNextBatch(CRITICAL_FRAMES)
+    })
   }
 
-  function onAllLoaded() {
-    // draw first frame
+  // Called once phase-1 (critical frames) are ready — shows the site
+  function onCriticalLoaded() {
+    // Draw first frame before revealing to avoid flash of empty canvas
     drawFrame(0)
     currentFrame = 0
 
-    // Initialize all GSAP and UI components immediately so they are prepped 
+    // Initialize all GSAP and UI components immediately so they are prepped
     // before the loader fades out, avoiding any Flash of Unstyled Content (FOUC).
     // NOTE: initCursorBubble() is intentionally NOT called here — it boots
     // eagerly on DOMContentLoaded so it works even before frames finish loading.
@@ -151,15 +178,15 @@
     initScrollAnimations()
     initNavDots()
 
-    // dismiss loader
+    // Dismiss loader
     loader.classList.add('dismissed')
     document.body.classList.add('loaded')
     isLoaded = true
 
-    // wait for loader fade-out, then remove it from DOM
+    // Remove loader from DOM after fade-out completes
     setTimeout(function () {
-      loader.remove()
-    }, 850)
+      if (loader && loader.parentNode) loader.remove()
+    }, 600)
   }
 
   // =============================================
@@ -194,10 +221,10 @@
     }
 
     lenis = new Lenis({
-      duration: 2.0,
+      duration: 1.4,
       easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)) },
       smoothWheel: true,
-      wheelMultiplier: 0.8,
+      wheelMultiplier: 1.0,
       touchMultiplier: 2
     })
 
@@ -218,8 +245,8 @@
 
   function initScrollAnimations() {
     // ——— Hero entrance (on load, not scroll) ———
-    // 0.85s (loader fade) + 0.1s (user requested delay) = 0.95s
-    var heroTl = gsap.timeline({ delay: 0.95 })
+    // 0.5s (loader fade) + 0.1s buffer = 0.6s total delay
+    var heroTl = gsap.timeline({ delay: 0.6 })
     heroTl
       .from('.hero-greeting', { y: 30, opacity: 0, duration: 0.7, ease: 'power3.out' })
       .from('.hero-name', { y: 50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=0.45')

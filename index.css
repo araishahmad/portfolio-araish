@@ -73,7 +73,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, transform 0.8s var(--ease-out-expo);
+  transition: opacity 0.5s ease, transform 0.5s var(--ease-out-expo);
 }
 
 #loader.dismissed {
