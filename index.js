@@ -399,7 +399,6 @@
     'GitHub Repository': { icon: I.extLink,    hint: 'View on GitHub' },
     // Contact
     'Email':             { icon: I.mail,       hint: 'Get in touch' },
-    'Phone':             { icon: I.phone,      hint: 'Call me' },
     'LinkedIn':          { icon: I.linkedin,   hint: 'Connect with me' },
     // Nav dots
     'Education':         { icon: I.graduation, hint: 'Academic history' },
